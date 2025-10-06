@@ -1,5 +1,6 @@
 from customtkinter import *
 from PIL import Image
+import Transformaciones
 
 #Funcion encargada de cargar las imagenes de la computadora en una lista
 def loadImages():
@@ -8,6 +9,7 @@ def loadImages():
         return listImages
     except:
         print("Images not founded")
+        return []
 
 #crea la instancia de Custom Tkinter(GUI)
 app = CTk()
@@ -18,7 +20,7 @@ secondaryFrame = CTkFrame(master=app,fg_color="transparent")
 secondaryFrame.pack(expand=True,fill="both")
 
 #Funcion se encarga de crear la pantalla, configurarla y centrarla
-def createWindow(parent:CTk, width, height):
+def createWindow(parent:CTk, width:int, height:int):
     screenWidth = (parent.winfo_screenwidth()//2)-(width//2)
     screenHeight = (parent.winfo_screenheight()//2)-(height//2)
 
@@ -79,8 +81,37 @@ def selectedimage3():
 def selectedImageMenu(indexImage:int,parent:CTk):
     clearScreen(parent)
     createReturnBtn(parent)
-    imageSelected = CTkImage(light_image=Image.open(images[indexImage]),size=(300,240))
-    imageSelectedLabel = CTkLabel(master=parent,image=imageSelected,text="Image selected").place(relx=0.5,rely=0.3,anchor="center")
+    
+    global image,imageSelectedWidget,imageSelectedLabel
+    global angleImage
+    angleImage = 0
+    
+    image = Image.open(images[indexImage])
+
+    imageSelectedWidget = CTkImage(light_image=image,size=(300,240))
+    imageSelectedLabel = CTkLabel(master=parent,image=imageSelectedWidget,text="Image selected")
+    imageSelectedLabel.place(relx=0.5,rely=0.3,anchor="center")
+
+    sliderRotation = CTkSlider(master=parent,from_=0,to=360,command=sliderHandler,number_of_steps=360)
+    sliderRotation.set(0)
+    sliderRotation.place(relx=0.5,rely=0.6,anchor="center")
+
+    btnRotate = CTkButton(master=parent,text="rotate",command=rotationHandler)
+    btnRotate.place(relx=0.5,rely=0.8,anchor="center")
+
+def sliderHandler(value):
+    print(value)
+    rotated = Transformaciones.rotateImage(image=image,angle=value)
+    #rotated = image.rotate(float(value))
+    imageSelectedWidget.configure(light_image=rotated)
+    imageSelectedLabel.configure(image=imageSelectedWidget)
+
+def rotationHandler():
+        
+    rotated = Transformaciones.rotateImage(image=image,angle=30)
+    #rotated = image.rotate(float(value))
+    imageSelectedWidget.configure(light_image=rotated)
+    imageSelectedLabel.configure(image=imageSelectedWidget)
 
 def clearScreen(parent:CTk):
     for widget in parent.winfo_children():
@@ -99,6 +130,3 @@ def handleExit():
 if __name__ == "__main__":
     createWindow(app,700,600)
     app.mainloop()
-
-
-

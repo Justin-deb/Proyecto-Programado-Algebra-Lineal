@@ -1,0 +1,17 @@
+Notas para la rotacion de imagen:
+Uses a 2x2 rotation matrix to perform the transformation
+Calculates new image dimensions to fit the rotated image
+Maps each pixel from the original image to its new rotated position
+Handles the translation to keep the image centered
+Note that this is a basic implementation and might be slower than PIL's built-in rotate function. Some improvements you could make:
+
+Add interpolation for smoother results
+Implement anti-aliasing
+Add optimizations to reduce computation time
+Handle different pixel formats
+The mathematical concept behind this is the 2D rotation matrix:
+
+[cos θ  -sin θ]
+[sin θ   cos θ]
+
+where θ is the rotation angle in radians.
