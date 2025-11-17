@@ -15,3 +15,5 @@ The mathematical concept behind this is the 2D rotation matrix:
 [sin θ   cos θ]
 
 where θ is the rotation angle in radians.
+
+source: https://shrishailsgajbhar.github.io/post/Image-Processing-Image-Rotation-Without-Library-Functions
