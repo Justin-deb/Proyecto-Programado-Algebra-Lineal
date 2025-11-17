@@ -179,7 +179,7 @@ def identifyObjectHandler(parent:CTk):
     topLevel.geometry(f"250x150+{screenWidth}+{screenHeight}")
     topLevel.grab_set()
     topLevel.focus_force()
-    label = CTkLabel(topLevel,text=f"Figura: {figure["shape"]}    Area: {figure["area_px"]}",anchor="center")
+    label = CTkLabel(topLevel,text=f"Figura: {figure['shape']}    Area: {figure['area_px']}",anchor="center")
     label.pack(pady= 40)
     createBTN(topLevel,"Cerrar",lambda: closeTopLevel(topLevel),0.5,0.7)
 
